@@ -3,12 +3,12 @@ import { useState } from 'react';
 export const Amount = () => {
   const [amount, setAmount] = useState(0);
 
-  const take = (value: number) => {
-    setAmount(current => current - value);
-  };
-
   const add = (value: number) => {
     setAmount(current => current + value);
+  };
+
+  const take = (value: number) => {
+    setAmount(current => current - value);
   };
 
   const clear = () => setAmount(0);
