@@ -11,10 +11,18 @@ const positionSlice = createSlice({
   name: 'position',
   initialState: startPosition,
   reducers: {
-    moveLeft: position => ({ ...position, x: position.x - 1 }),
-    moveRight: position => ({ ...position, x: position.x + 1 }),
-    moveUp: position => ({ ...position, y: position.y - 1 }),
-    moveDown: position => ({ ...position, y: position.y + 1 }),
+    moveLeft: position => {
+      position.x -= 1;
+    },
+    moveRight: position => {
+      position.x += 1;
+    },
+    moveUp: position => {
+      position.y -= 1;
+    },
+    moveDown: position => {
+      position.y += 1;
+    },
   },
 });
 
