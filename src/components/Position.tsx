@@ -2,6 +2,10 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../app/hooks';
 import { actions as positionActions } from '../features/position';
 
+function wait(delay: number) {
+  return new Promise(resolve => setTimeout(resolve, delay));
+}
+
 export const Position = () => {
   const dispatch = useDispatch();
   const { x, y } = useAppSelector(state => state.position);
@@ -10,6 +14,13 @@ export const Position = () => {
   const moveRight = () => dispatch(positionActions.moveRight());
   const moveUp = () => dispatch(positionActions.moveUp());
   const moveDown = () => dispatch(positionActions.moveDown());
+
+  const dance = () => {
+    dispatch(positionActions.moveRight());
+    dispatch(positionActions.moveDown());
+    dispatch(positionActions.moveLeft());
+    dispatch(positionActions.moveUp());
+  };
 
   const transformValue = `translate(${x * 100}%, ${y * 100}%)`;
 
@@ -31,7 +42,11 @@ export const Position = () => {
         </div>
 
         <div className="field">
-          <div className="track" style={{ transform: transformValue }}>
+          <div
+            className="truck"
+            style={{ transform: transformValue }}
+            onClick={dance}
+          >
             {x + y}
           </div>
         </div>
