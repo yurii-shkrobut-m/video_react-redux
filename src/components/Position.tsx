@@ -1,26 +1,15 @@
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../app/hooks';
-import { actions as positionActions } from '../features/position';
-
-function wait(delay: number) {
-  return new Promise(resolve => setTimeout(resolve, delay));
-}
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import * as positionActions from '../features/position';
 
 export const Position = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { x, y } = useAppSelector(state => state.position);
 
   const moveLeft = () => dispatch(positionActions.moveLeft());
   const moveRight = () => dispatch(positionActions.moveRight());
   const moveUp = () => dispatch(positionActions.moveUp());
   const moveDown = () => dispatch(positionActions.moveDown());
-
-  const dance = () => {
-    dispatch(positionActions.moveRight());
-    dispatch(positionActions.moveDown());
-    dispatch(positionActions.moveLeft());
-    dispatch(positionActions.moveUp());
-  };
+  const dance = () => dispatch(positionActions.doACircle(500));
 
   const transformValue = `translate(${x * 100}%, ${y * 100}%)`;
 

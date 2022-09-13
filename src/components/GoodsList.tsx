@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { actions as goodsActions } from '../features/goods';
 
 export const GoodsList = () => {
   const [newGood, setNewGood] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const goods = useAppSelector(state => state.goods);
 
   const addGood = (goodToAdd: string) => dispatch(goodsActions.add(goodToAdd));
@@ -39,7 +38,7 @@ export const GoodsList = () => {
         {goods.map(good => (
           <li key={good}>
             <button
-              onClick={() => removeGood(good)} 
+              onClick={() => removeGood(good)}
               className="delete"
             />
 

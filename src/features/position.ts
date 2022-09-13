@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, Dispatch } from '@reduxjs/toolkit';
 
 type Position = {
   x: number;
@@ -27,4 +27,21 @@ const positionSlice = createSlice({
 });
 
 export default positionSlice.reducer;
-export const { actions } = positionSlice;
+export const { moveDown, moveLeft, moveRight, moveUp } = positionSlice.actions;
+
+function wait(delay: number) {
+  return new Promise(resolve => setTimeout(resolve, delay));
+}
+
+export const doACircle = (delay: number) => {
+  return async (dispatch: Dispatch) => {
+    dispatch(moveRight());
+    await wait(delay);
+    dispatch(moveDown());
+    await wait(delay);
+    dispatch(moveLeft());
+    await wait(delay);
+    dispatch(moveUp());
+  };
+};
+
