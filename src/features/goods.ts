@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit';
+import { fetchGoods } from '../services/api';
 
 type GoodsState = {
   goods: string[];
@@ -25,6 +26,7 @@ const goodsSlice = createSlice({
     set: (state, action: PayloadAction<string[]>) => {
       state.goods = action.payload;
     },
+    // #region add, take, clear actions
     add: (state, action: PayloadAction<string>) => {
       state.goods.push(action.payload);
     },
@@ -34,8 +36,26 @@ const goodsSlice = createSlice({
     clear: (state) => {
       state.goods = [];
     },
+    // #endregion
   }
 });
 
 export default goodsSlice.reducer;
-export const { actions } = goodsSlice;
+export const { set, add, take, clear, setLoading, setError } = goodsSlice.actions;
+
+export const init = () => {
+  return (dispatch: Dispatch) => {
+    dispatch(setLoading(true));
+
+    fetchGoods()
+      .then(goodsFromServer => {
+        dispatch(set(goodsFromServer));
+      })
+      .catch(() => {
+        dispatch(setError('Something went wrong'));
+      })
+      .finally(() => {
+        dispatch(setLoading(false));
+      });
+  };
+}
