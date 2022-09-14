@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { moveRight } from './position';
 
 const amountSlice = createSlice({
   name: 'amount',
@@ -7,6 +8,9 @@ const amountSlice = createSlice({
     add: (value, action: PayloadAction<number>) => value + action.payload,
     take: (value, action: PayloadAction<number>) => value - action.payload,
     clear: () => 0,
+  },
+  extraReducers: (builder) => {
+    builder.addCase(moveRight.type, (value) => value + 1);
   },
 })
 
